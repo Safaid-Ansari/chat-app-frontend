@@ -23,6 +23,7 @@ function HomePage() {
       navigate("/chats");
     }
   }, [navigate]);
+
   return (
     <Container maxW="xl" centerContent>
       <Box
