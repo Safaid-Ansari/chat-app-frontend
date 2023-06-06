@@ -28,7 +28,7 @@ const Login = () => {
       toast({
         title: "Please Fill all the fields",
         status: "warning",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
         position: "bottom",
       });
@@ -47,10 +47,11 @@ const Login = () => {
         },
         config
       );
+      console.log("data", data);
       toast({
         title: "Login successful ",
         status: "success",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
         position: "bottom",
       });
@@ -62,7 +63,7 @@ const Login = () => {
         title: "Something went wrong ",
         description: error.response.data.message,
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
         position: "bottom",
       });

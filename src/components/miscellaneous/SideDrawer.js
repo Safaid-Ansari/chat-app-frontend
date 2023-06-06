@@ -125,7 +125,7 @@ function SideDrawer() {
         title: "Error fetching the chat",
         description: error.message,
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
         position: "bottom-left",
       });

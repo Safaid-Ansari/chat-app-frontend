@@ -31,7 +31,7 @@ const MyChats = ({ fetchAgain }) => {
         title: "Error Occurred!",
         description: "Failed to Load the chats",
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
         position: "bottom-left",
       });
