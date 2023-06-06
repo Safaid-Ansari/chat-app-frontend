@@ -53,9 +53,9 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("UserInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      navigate("/chat");
+      navigate("/chats");
     } catch (error) {
       toast({
         title: "Something went wrong ",

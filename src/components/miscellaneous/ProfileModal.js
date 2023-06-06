@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const ProfileModel = ({ user, children }) => {
+const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -63,11 +63,6 @@ const ProfileModel = ({ user, children }) => {
                 Email : {user.email}
               </Text>
             </ModalBody>
-            <ModalFooter mb={10}>
-              <Button mb={100} colorScheme="blue" mr={5} onClick={onClose}>
-                Close
-              </Button>
-            </ModalFooter>
           </ModalContent>
         </Modal>
       </div>
@@ -75,4 +70,4 @@ const ProfileModel = ({ user, children }) => {
   );
 };
 
-export default ProfileModel;
+export default ProfileModal;

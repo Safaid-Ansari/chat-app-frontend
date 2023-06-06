@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { ChatState } from "../context/chatProvider";
-import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
-import { AddIcon } from "@chakra-ui/icons";
-import ChatLoading from "./ChatLoading";
+import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
-import GroupChatModel from "./miscellaneous/GroupChatModel";
+import ChatLoading from "./ChatLoading";
+import GroupChatModal from "./miscellaneous/GroupChatModal";
+import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import { ChatState } from "../context/chatProvider";
+import { AddIcon } from "@chakra-ui/icons";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
-  const { selectedChat, setSelectedChat, chats, setChats, user } = ChatState();
+
+  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const toast = useToast();
 
   const fetchChats = async () => {
+    // console.log(user._id);
     try {
       const config = {
         headers: {
@@ -22,78 +24,78 @@ const MyChats = () => {
       };
 
       const { data } = await axios.get("/api/chats", config);
-      console.log(data);
       setChats(data);
     } catch (error) {
       toast({
-        title: "Error Occurred",
-        description: "Failed to load the chats",
+        title: "Error Occurred!",
+        description: "Failed to Load the chats",
         status: "error",
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
         position: "bottom-left",
       });
-      return;
     }
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("UserInfo")));
+    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, []);
+    // eslint-disable-next-line
+  }, [fetchAgain]);
+
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
-      flexDir={"column"}
-      alignItems={"center"}
+      flexDir="column"
+      alignItems="center"
       p={3}
-      bg={"white"}
+      bg="white"
       w={{ base: "100%", md: "31%" }}
-      borderRadius={"lg"}
-      borderWidth={"1px"}
+      borderRadius="lg"
+      borderWidth="1px"
     >
       <Box
         pb={3}
         px={3}
         fontSize={{ base: "28px", md: "30px" }}
-        fontFamily={"Work sans"}
-        display={"flex"}
-        w={"100%"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
+        fontFamily="Work sans"
+        display="flex"
+        w="100%"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        Safaid
-        <GroupChatModel>
+        My Chats
+        <GroupChatModal>
           <Button
-            display={"flex"}
+            display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<AddIcon></AddIcon>}
+            rightIcon={<AddIcon />}
           >
             New Group Chat
           </Button>
-        </GroupChatModel>
+        </GroupChatModal>
       </Box>
       <Box
-        display={"flex"}
-        flexDir={"column"}
+        display="flex"
+        flexDir="column"
         p={3}
-        bg={"#F8F8F8"}
-        w={"100%"}
-        h={"100%"}
-        borderRadius={"lg"}
-        overflowY={"hidden"}
+        bg="#F8F8F8"
+        w="100%"
+        h="100%"
+        borderRadius="lg"
+        overflowY="hidden"
       >
         {chats ? (
-          <Stack overflowY={"scroll"}>
-            {chats.map((chat) => {
+          <Stack overflowY="scroll">
+            {chats.map((chat) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
-                cursor={"pointer"}
+                cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}
-                borderRadius={"lg"}
+                borderRadius="lg"
                 key={chat._id}
               >
                 <Text>
@@ -101,11 +103,19 @@ const MyChats = () => {
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
-              </Box>;
-            })}
+                {chat.latestMessage && (
+                  <Text fontSize="xs">
+                    <b>{chat.latestMessage.sender.name} : </b>
+                    {chat.latestMessage.content.length > 50
+                      ? chat.latestMessage.content.substring(0, 51) + "..."
+                      : chat.latestMessage.content}
+                  </Text>
+                )}
+              </Box>
+            ))}
           </Stack>
         ) : (
-          <ChatLoading></ChatLoading>
+          <ChatLoading />
         )}
       </Box>
     </Box>

@@ -111,16 +111,16 @@ const Signup = () => {
       );
 
       toast({
-        title: "Register successful ",
+        title: "Register successful Please Login",
         status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
 
-      localStorage.setItem("UserInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      navigate("/chat");
+      navigate("/");
     } catch (error) {
       toast({
         title: "Something went wrong ",
@@ -138,7 +138,7 @@ const Signup = () => {
       <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
-        value={name}
+          value={name}
           placeholder="Enter your name "
           onChange={(e) => setName(e.target.value)}
         ></Input>
@@ -146,7 +146,7 @@ const Signup = () => {
       <FormControl id="email" isRequired>
         <FormLabel>E-Mail</FormLabel>
         <Input
-        value={email}
+          value={email}
           placeholder="Enter your email "
           onChange={(e) => setEmail(e.target.value)}
         ></Input>
@@ -154,8 +154,8 @@ const Signup = () => {
       <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup>
-          <Input 
-          value={password}
+          <Input
+            value={password}
             type={show ? "text" : "password"}
             placeholder="Enter password "
             onChange={(e) => setPassword(e.target.value)}
@@ -170,8 +170,8 @@ const Signup = () => {
       <FormControl id="confirm-password" isRequired>
         <FormLabel>Confirm-Password</FormLabel>
         <InputGroup>
-          <Input 
-          value={confirmPassword}
+          <Input
+            value={confirmPassword}
             type={show ? "text" : "password"}
             placeholder="Enter confirm password  "
             onChange={(e) => setConfirmPassword(e.target.value)}
