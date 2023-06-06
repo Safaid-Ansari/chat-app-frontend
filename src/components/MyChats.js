@@ -7,6 +7,8 @@ import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
 import { ChatState } from "../context/chatProvider";
 import { AddIcon } from "@chakra-ui/icons";
 
+const ENDPOINT = "https://chat-application-backend-side.onrender.com";
+
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
@@ -15,7 +17,6 @@ const MyChats = ({ fetchAgain }) => {
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);
     try {
       const config = {
         headers: {
@@ -23,7 +24,7 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get("/api/chats", config);
+      const { data } = await axios.get(`${ENDPOINT}/api/chats`, config);
       setChats(data);
     } catch (error) {
       toast({

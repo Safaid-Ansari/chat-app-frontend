@@ -32,6 +32,8 @@ import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../UserAvatar/UserListItem";
 import { ChatState } from "../../context/chatProvider";
 
+const ENDPOINT = "https://chat-application-backend-side.onrender.com";
+
 function SideDrawer() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -77,7 +79,10 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `${ENDPOINT}/api/user?search=${search}`,
+        config
+      );
 
       setLoading(false);
       setSearchResult(data);
@@ -105,7 +110,11 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chats`, { userId }, config);
+      const { data } = await axios.post(
+        `${ENDPOINT}/api/chats`,
+        { userId },
+        config
+      );
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -142,8 +151,12 @@ function SideDrawer() {
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="3xl" fontFamily="Work sans">
-          Developed by{" "}
+        <Text
+          fontSize={{ base: "2xl", md: "3xl" }}
+          ml={{ base: "40px" }}
+          fontFamily="Work sans"
+        >
+          Developed By{" "}
           <a href="https://www.linkedin.com/in/safaid-ansari-940893219/">
             Safaid-Ansari
           </a>
@@ -155,7 +168,7 @@ function SideDrawer() {
                 count={notification.length}
                 effect={Effect.SCALE}
               />
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon fontSize="2xl" m={1} ml={{ base: "55px" }} />
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
@@ -177,6 +190,7 @@ function SideDrawer() {
           <Menu>
             <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
               <Avatar
+                ml={{ base: "40px" }}
                 size="sm"
                 cursor="pointer"
                 name={user.name}

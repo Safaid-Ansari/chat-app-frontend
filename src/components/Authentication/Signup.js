@@ -11,6 +11,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+
+const ENDPOINT = "https://chat-application-backend-side.onrender.com";
+
 const Signup = () => {
   const toast = useToast();
   const navigate = useNavigate();
@@ -100,7 +103,7 @@ const Signup = () => {
         "content-type": "application/json",
       };
       const { data } = await axios.post(
-        "/api/user/register",
+        `${ENDPOINT}/api/user/register`,
         {
           name,
           email,

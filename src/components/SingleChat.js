@@ -20,7 +20,8 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
-const ENDPOINT = "https://chat-application-backend-side.onrender.com/";
+const ENDPOINT = "https://chat-application-backend-side.onrender.com";
+
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -52,11 +53,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-
       setLoading(true);
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${ENDPOINT}/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -87,7 +87,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${ENDPOINT}/api/message`,
           {
             content: newMessage,
             chatId: selectedChat,
@@ -121,6 +121,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("stop typing", () => {
       setIsTyping(false);
     });
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -240,7 +241,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <div>
                   <Lottie
                     options={defaultOptions}
-                    // height={50}
                     width={70}
                     style={{ marginBottom: 15, marginLeft: 0 }}
                   />
@@ -259,7 +259,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Box>
         </>
       ) : (
-        // to get socket.io on same page
         <Box
           display="flex"
           alignItems="center"
